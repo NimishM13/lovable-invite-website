@@ -7,7 +7,8 @@ describe('Wedding invitation', () => {
     expect(remainingTime(weddingSettings.countdownTarget, Date.parse('2027-01-22T02:30:00Z'))?.values).toEqual([1, 0, 0, 0]);
   });
   it('never shows negative values after the celebration begins', () => {
-    expect(remainingTime(weddingSettings.countdownTarget, Date.parse('2027-02-01T00:00:00Z')))).toEqual({total: 0, values: [0, 0, 0, 0]});
+    const result = remainingTime(weddingSettings.countdownTarget, Date.parse('2027-02-01T00:00:00Z'));
+    expect(result).toEqual({total: 0, values: [0, 0, 0, 0]});
   });
   it('safely falls back for invalid countdown configuration', () => {
     expect(remainingTime('not-a-date', Date.now())).toBeNull();
