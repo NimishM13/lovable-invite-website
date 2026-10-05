@@ -21,6 +21,6 @@ export function Countdown() {
       <div className="countdown-digits" role="timer" aria-label="Time until the wedding celebration">
         {remaining.values.map((value, index) => <div key={index}><span>{String(value).padStart(2, '0')}</span><small>{['Days', 'Hours', 'Minutes', 'Seconds'][index]}</small></div>)}
       </div>}
-    <p className="countdown-note">23 January 2027 · 8:00 AM IST</p>
+    <p className="countdown-note">{Number.isFinite(Date.parse(weddingSettings.countdownTarget)) ? new Intl.DateTimeFormat('en-IN', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata'}).format(new Date(weddingSettings.countdownTarget)) + ' IST' : weddingSettings.dateText}</p>
   </section>;
 }
