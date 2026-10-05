@@ -13,4 +13,5 @@
 - Keep all invitation content in one public index route with in-page anchors; guests share one identical invitation.
 - Keep wedding settings, families, venues, event schedules and artwork references in a client-safe central configuration; presentation components must not hardcode editable details.
 - Use generated, optimized WebP artwork with independent theme tokens for event chapters; image failures retain readable themed compositions.
+- Serve artwork through a shared responsive source registry and place mobile chapter artwork after its text in normal flow; this reduces downloads and prevents overlap at narrow widths.
 - Keep entry state transient and compute countdown after hydration; no guest storage or backend is needed for the public invitation.

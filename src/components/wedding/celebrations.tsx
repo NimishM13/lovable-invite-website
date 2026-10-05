@@ -2,6 +2,7 @@ import { weddingEvents, venues, type WeddingEvent } from '@/config/wedding';
 import { Button } from '@/components/ui/button';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { Artwork, LocationButton, Ornament } from './primitives';
+import { artworkSources } from '@/config/artwork';
 
 export function Timeline() {
   return <section id="timeline" className="timeline-section section-anchor">
@@ -25,7 +26,7 @@ function Decorations({type}: {type: string}) {
 }
 export function EventChapter({event, index}: {event: WeddingEvent; index: number}) {
   return <section id={event.id} className={`event-chapter section-anchor theme-${event.theme}`}>
-    <div className="event-art"><Artwork src={event.illustration} alt={event.illustrationAlt} /></div>
+    <picture className="event-art"><source media="(max-width: 760px)" srcSet={artworkSources(event.illustration)?.mobile} /><Artwork src={event.illustration} alt={event.illustrationAlt} /></picture>
     <Decorations type={event.decorations} />
     <div className="chapter-content">
       <p className="eyebrow chapter-number">Celebration {String(index + 1).padStart(2, '0')} <span> / </span> {event.date}</p>
