@@ -2,3 +2,4 @@
 - [x] Build configurable single invitation and entry flow.
 - [x] Complete eight original illustrated event chapters, timeline, family, countdown, venues and sharing.
 - [x] Verify desktop/mobile presentation and interactions.
+- [x] Refine phone layouts, supply smaller artwork sizes, and verify every celebration.

@@ -5,6 +5,7 @@ import { weddingSettings as settings, family, venues, weddingEvents } from '@/co
 import { Artwork, Ornament, LocationButton } from './primitives';
 import { Countdown } from './countdown';
 import { EventChapter, Timeline } from './celebrations';
+import { artworkSources } from '@/config/artwork';
 
 function Navigation() {
   const [open, setOpen] = useState(false);
@@ -47,7 +48,7 @@ function Closing() {
     catch {setManualUrl(invitationUrl()); setStatus('Select the invitation link to copy it');}
   };
   return <section className="closing-section">
-    <Artwork src={settings.illustrations.closing} alt="Floral palace arch and illustrated wedding couple" />
+    <picture className="closing-art"><source media="(max-width: 760px)" srcSet={artworkSources(settings.illustrations.closing)?.mobile} /><Artwork src={settings.illustrations.closing} alt="Floral palace arch and illustrated wedding couple" /></picture>
     <div className="closing-copy"><Ornament /><p className="closing-message">{settings.closing}</p><p className="eyebrow">With love,</p><h2>{settings.groom}<span>&</span>{settings.bride}</h2><p className="closing-date">{settings.dateText}</p>
       <div className="share-controls"><Button variant="invitation" onClick={share}><Share2 />Share invitation</Button><Button variant="stationery" onClick={copy}>{status === 'Invitation link copied' ? <Check /> : <LinkIcon />}Copy invitation link</Button></div>
       <p className="share-status" role="status">{status}</p>{manualUrl && <input className="manual-link" aria-label="Invitation link" value={manualUrl} readOnly onFocus={e => e.target.select()} />}
@@ -57,7 +58,7 @@ function Closing() {
 export function Invitation() {
   return <><Navigation /><main>
     <section id="home" className="hero-section section-anchor">
-      <picture className="hero-picture"><source media="(min-width: 761px)" srcSet={settings.illustrations.coverWide} /><Artwork src={settings.illustrations.cover} alt="Illustrated Indian bride and groom within a hand-painted floral palace frame" portrait eager /></picture>
+      <picture className="hero-picture"><source media="(min-width: 761px)" srcSet={artworkSources(settings.illustrations.coverWide)?.srcSet ?? settings.illustrations.coverWide} sizes="100vw" /><Artwork src={settings.illustrations.cover} alt="Illustrated Indian bride and groom within a hand-painted floral palace frame" portrait eager /></picture>
       <div className="hero-copy"><p className="eyebrow">Together with our families</p><h1>{settings.groom}<span>Weds</span>{settings.bride}</h1><Ornament /><p className="hero-date">{settings.dateText}</p><p className="hero-tagline">{settings.tagline}</p></div>
       <a href="#family" className="scroll-cue" aria-label="Explore the invitation"><ArrowDown /><span>A celebration of love</span></a>
     </section>
