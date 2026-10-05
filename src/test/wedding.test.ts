@@ -4,7 +4,7 @@ import { weddingEvents, venues, weddingSettings } from '@/config/wedding';
 
 describe('Wedding invitation', () => {
   it('counts down to the exact IST ceremony time', () => {
-    expect(remainingTime(weddingSettings.countdownTarget, Date.parse('2027-01-22T02:30:00Z')))?.values).toEqual([1, 0, 0, 0]);
+    expect(remainingTime(weddingSettings.countdownTarget, Date.parse('2027-01-22T02:30:00Z'))?.values).toEqual([1, 0, 0, 0]);
   });
   it('never shows negative values after the celebration begins', () => {
     expect(remainingTime(weddingSettings.countdownTarget, Date.parse('2027-02-01T00:00:00Z')))).toEqual({total: 0, values: [0, 0, 0, 0]});
