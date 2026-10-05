@@ -244,11 +244,11 @@ main { overflow: clip; }
   .hero-section > .artwork { object-fit: cover; }
   .hero-copy { top: 15%; left: 12%; right: 12%; }
   .hero-copy .eyebrow { font-size: 8px; letter-spacing: 1.5px; }
-  .hero-copy h1 { font-size: 58px; margin-top: 22px; }
-  .hero-copy h1 span { font-size: 10px; margin: 14px 0; }
+  .hero-copy h1 { font-size: 52px; margin-top: 16px; }
+  .hero-copy h1 span { font-size: 10px; margin: 10px 0; }
   .hero-date { font-size: 9px; letter-spacing: 1.1px; }
-  .hero-tagline { font-size: 18px; line-height: 1.2; max-width: 210px; margin: 13px auto; }
-  .hero-copy .ornament { margin: 17px auto; }
+  .hero-tagline { font-size: 16px; line-height: 1.2; max-width: 240px; margin: 10px auto; }
+  .hero-copy .ornament { margin: 10px auto; }
   .scroll-cue { bottom: 3%; right: 0; left: 0; justify-content: center; font-size: 8px; }
   .family-section { padding: 70px 22px 50px; }
   .family-section h2 { font-size: 36px; }
