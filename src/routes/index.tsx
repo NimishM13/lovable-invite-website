@@ -1,24 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import { Entry } from '@/components/wedding/entry';
+import { Invitation } from '@/components/wedding/invitation';
+import { weddingSettings } from '@/config/wedding';
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
+export const Route = createFileRoute('/')({
+  head: () => ({meta: [
+    {title: `${weddingSettings.groom} Weds ${weddingSettings.bride} — ${weddingSettings.dateText}`},
+    {name: 'description', content: `You're invited to celebrate the wedding of ${weddingSettings.groom} and ${weddingSettings.bride}, ${weddingSettings.dateText}. Three days of love, blessings and beautiful beginnings.`},
+    {property: 'og:title', content: `${weddingSettings.groom} Weds ${weddingSettings.bride}`},
+    {property: 'og:description', content: `${weddingSettings.dateText} — ${weddingSettings.tagline} Join us for our wedding celebrations.`},
+    {property: 'og:type', content: 'website'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+  ]}),
+  component: WeddingInvitation,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+function WeddingInvitation() {
+  const [entered, setEntered] = useState(false);
+  return <>{!entered && <Entry onEnter={() => {setEntered(true); window.scrollTo({top: 0, behavior: 'instant'});}} />}<div className={entered ? 'invitation-entered' : ''} inert={!entered} aria-hidden={!entered}><Invitation /></div></>;
 }
