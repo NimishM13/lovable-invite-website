@@ -57,7 +57,7 @@ function Closing() {
 export function Invitation() {
   return <><Navigation /><main>
     <section id="home" className="hero-section section-anchor">
-      <Artwork src={settings.illustrations.cover} alt="Illustrated Indian bride and groom within a hand-painted floral palace frame" portrait eager />
+      <picture className="hero-picture"><source media="(min-width: 761px)" srcSet={settings.illustrations.coverWide} /><Artwork src={settings.illustrations.cover} alt="Illustrated Indian bride and groom within a hand-painted floral palace frame" portrait eager /></picture>
       <div className="hero-copy"><p className="eyebrow">Together with our families</p><h1>{settings.groom}<span>Weds</span>{settings.bride}</h1><Ornament /><p className="hero-date">{settings.dateText}</p><p className="hero-tagline">{settings.tagline}</p></div>
       <a href="#family" className="scroll-cue" aria-label="Explore the invitation"><ArrowDown /><span>A celebration of love</span></a>
     </section>

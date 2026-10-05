@@ -1,4 +1,5 @@
 import cover from '@/assets/wedding-cover.webp';
+import coverWide from '@/assets/wedding-cover-wide.webp';
 import opening from '@/assets/ganesh-opening.webp';
 import mata from '@/assets/mata-poojan.webp';
 import mehndi from '@/assets/mehndi.webp';
@@ -15,7 +16,7 @@ export const weddingSettings = {
   countdownTarget: '2027-01-23T08:00:00+05:30',
   tagline: 'Three days. Countless memories. One beautiful beginning.',
   introVideo: { enabled: true, src: '/videos/wedding-intro.mp4', skipEnabled: true },
-  illustrations: { cover, opening, closing: reception },
+  illustrations: { cover, coverWide, opening, closing: reception },
   blessing: 'With the blessings of Lord Ganesha, we invite you to celebrate our beautiful beginning.',
   closing: 'Your presence will make these moments even more special.',
 };
