@@ -335,3 +335,28 @@ main { overflow: clip; }
   .skip-intro { bottom: max(24px, env(safe-area-inset-bottom)); }
   .entry-screen { overscroll-behavior: contain; }
 }
+
+/* Mobile story deck: each celebration fills exactly one screen and snaps into place. */
+@media (max-width: 760px) {
+  html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
+  .event-chapter { height: 100svh; min-height: 100svh; max-height: 100svh; padding: 0; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; }
+  .event-chapter .event-art { order: 1; flex: 0 0 40svh; height: 40svh; aspect-ratio: auto; }
+  .event-chapter .event-art::after { background: linear-gradient(180deg, transparent 60%, var(--event-paper) 100%); }
+  .event-chapter .chapter-content { order: 2; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: center; padding: 6px 20px max(30px, env(safe-area-inset-bottom)); }
+  .event-chapter .chapter-content h2 { font-size: clamp(28px, 8.5vw, 38px); max-width: 330px; }
+  .event-chapter .chapter-content .ornament { margin: 8px auto; }
+  .event-chapter .event-ceremony { margin-top: 6px; }
+  .event-chapter .event-description { font-size: clamp(15px, 4.2vw, 18px); line-height: 1.3; margin: 10px auto; max-width: 310px; }
+  .event-chapter .event-details { margin: 6px 0 10px; }
+  .event-chapter .event-time { font-size: clamp(19px, 5.4vw, 23px); margin: 3px 0; }
+  .event-chapter .event-subtimes { flex-direction: row; justify-content: center; gap: 18px; margin: 6px 0; }
+  .event-chapter .event-subtimes strong { font-size: 17px; }
+  .event-chapter .event-venue { margin-top: 4px; }
+  .event-chapter .chapter-footer { bottom: max(8px, env(safe-area-inset-bottom)); font-size: 8px; }
+  .event-chapter .chapter-footer > span:first-child { font-size: 15px; }
+}
+@media (max-width: 760px) and (max-height: 700px) {
+  .event-chapter .event-art { flex-basis: 34svh; height: 34svh; }
+  .event-chapter .event-description { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .event-chapter .chapter-content .ornament { display: none; }
+}
