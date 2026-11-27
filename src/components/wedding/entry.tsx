@@ -1,41 +1,93 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { weddingSettings as settings } from '@/config/wedding';
-import { Artwork, Ornament } from './primitives';
+import { useEffect, useRef, useState } from "react";
+import { weddingSettings as settings } from "@/config/wedding";
+import { LotusDivider, Mandala, Petals, Seal } from "./ornaments";
 
-export function Entry({onEnter}: {onEnter: () => void}) {
-  const [video, setVideo] = useState(Boolean(settings.introVideo.enabled && settings.introVideo.src));
-  const [leaving, setLeaving] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const enterRef = useRef<HTMLButtonElement>(null);
+const OPEN_MS = 1500;
+const OPEN_MS_REDUCED = 250;
+
+/**
+ * The opening: a gatefold invitation card painted with Lord Ganesha. Breaking the seal swings
+ * both leaves open onto the invitation. “Skip intro” enters immediately; Enter/Escape work too.
+ */
+export function Entry({ onEnter }: { onEnter: () => void }) {
+  const [opening, setOpening] = useState(false);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const done = useRef(false);
+
+  const finish = () => {
+    if (!done.current) {
+      done.current = true;
+      onEnter();
+    }
+  };
+  const open = () => {
+    if (opening) return;
+    setOpening(true);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.setTimeout(finish, reduce ? OPEN_MS_REDUCED : OPEN_MS);
+  };
+
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {document.body.style.overflow = '';};
+    document.body.style.overflow = "hidden";
+    screenRef.current?.focus({ preventScroll: true });
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") finish();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    if (!video) { enterRef.current?.focus({preventScroll: true}); return; }
-    const timeout = window.setTimeout(() => setVideo(false), 12000);
-    const play = videoRef.current?.play();
-    play?.catch(() => setVideo(false));
-    return () => window.clearTimeout(timeout);
-  }, [video]);
-  const enter = () => {setLeaving(true); window.setTimeout(onEnter, 600);};
-  return <div className={`entry-screen ${leaving ? 'entry-leaving' : ''}`}>
-    {video ? <div className="video-intro">
-      <video ref={videoRef} src={settings.introVideo.src} autoPlay muted playsInline onEnded={() => setVideo(false)} onError={() => setVideo(false)} aria-label="Wedding introduction" />
-      {settings.introVideo.skipEnabled && <Button variant="stationery" className="skip-intro" onClick={() => setVideo(false)}>Skip intro <ArrowRight /></Button>}
-    </div> : <section className="ganesh-page" aria-label="An auspicious beginning">
-      <Artwork src={settings.illustrations.opening} alt="Lord Ganesha framed by marigold garlands, lotus flowers and brass diyas" eager portrait />
-      <div className="entry-monogram">N <span>&</span> S</div>
-      <div className="ganesh-copy">
-        <p className="invocation" lang="sa">ॐ श्री गणेशाय नमः</p>
-        <Ornament />
-        <p className="shloka" lang="sa">वक्रतुण्ड महाकाय<br />सूर्यकोटि समप्रभः ।<br />निर्विघ्नं कुरु मे देव<br />शुभकार्येषु सर्वदा ॥</p>
-        <p className="entry-blessing">{settings.blessing}</p>
-        <Button ref={enterRef} variant="invitation" onClick={enter}>Enter invitation <ArrowRight /></Button>
-        <p className="entry-date">{settings.dateText}</p>
+
+  const leaf = (side: "left" | "right") => (
+    <div className={`gate-leaf gate-${side}`} aria-hidden="true">
+      <div
+        className="gate-face"
+        style={{ backgroundImage: `url(${settings.illustrations.opening})` }}
+      />
+      <div className="gate-edge" />
+    </div>
+  );
+
+  return (
+    <div
+      className={`entry-screen ${opening ? "is-opening" : ""}`}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="entry-names"
+      ref={screenRef}
+      tabIndex={-1}
+    >
+      <Mandala className="entry-backdrop-mandala" />
+      <button type="button" className="skip-intro" onClick={finish}>
+        Skip intro
+      </button>
+      <div className="gate">
+        {leaf("left")}
+        {leaf("right")}
+        <div className="gate-copy">
+          <p className="gate-eyebrow">The wedding of</p>
+          <h1 id="entry-names" className="gate-names">
+            {settings.groom}
+            <span>&amp;</span>
+            {settings.bride}
+          </h1>
+          <LotusDivider />
+          <p className="gate-date">{settings.dateText}</p>
+          <button
+            type="button"
+            className="seal-button"
+            onClick={open}
+            aria-label="Open the invitation"
+          >
+            <Seal initials={[settings.groom.charAt(0), settings.bride.charAt(0)]} />
+            <span>Tap the seal to open</span>
+          </button>
+        </div>
+        <Petals className="gate-petals" count={5} />
       </div>
-    </section>}
-  </div>;
+    </div>
+  );
 }
