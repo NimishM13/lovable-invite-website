@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Entry } from "@/components/wedding/entry";
 import { Invitation } from "@/components/wedding/invitation";
+import { BackgroundMusic, startMusic } from "@/components/wedding/music";
 import { weddingSettings } from "@/config/wedding";
 
 const title = `${weddingSettings.groom} Weds ${weddingSettings.bride} — ${weddingSettings.dateText}`;
@@ -42,6 +43,7 @@ function WeddingInvitation() {
   // Deep links (e.g. a shared #venues link) skip the intro and land on their section
   // once the entry screen has released the page.
   const deepLink = useRef<HTMLElement | null>(null);
+  const music = useRef<HTMLAudioElement | null>(null);
   useEffect(() => {
     const id = decodeURIComponent(window.location.hash.slice(1));
     const target = id ? document.getElementById(id) : null;
@@ -62,7 +64,8 @@ function WeddingInvitation() {
   };
   return (
     <>
-      {!entered && <Entry onEnter={enter} />}
+      {!entered && <Entry onEnter={enter} onGesture={() => void startMusic(music.current)} />}
+      <BackgroundMusic audioRef={music} showControl={entered} />
       <div
         className={entered ? "invitation-entered" : "invitation-waiting"}
         inert={!entered}

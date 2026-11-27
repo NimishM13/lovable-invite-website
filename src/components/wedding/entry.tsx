@@ -9,7 +9,7 @@ const OPEN_MS_REDUCED = 250;
  * The opening: a gatefold invitation card painted with Lord Ganesha. Breaking the seal swings
  * both leaves open onto the invitation. “Skip intro” enters immediately; Enter/Escape work too.
  */
-export function Entry({ onEnter }: { onEnter: () => void }) {
+export function Entry({ onEnter, onGesture }: { onEnter: () => void; onGesture?: () => void }) {
   const [opening, setOpening] = useState(false);
   const screenRef = useRef<HTMLDivElement>(null);
   const done = useRef(false);
@@ -20,8 +20,13 @@ export function Entry({ onEnter }: { onEnter: () => void }) {
       onEnter();
     }
   };
+  const enterNow = () => {
+    onGesture?.();
+    finish();
+  };
   const open = () => {
     if (opening) return;
+    onGesture?.();
     setOpening(true);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.setTimeout(finish, reduce ? OPEN_MS_REDUCED : OPEN_MS);
@@ -31,7 +36,7 @@ export function Entry({ onEnter }: { onEnter: () => void }) {
     document.body.style.overflow = "hidden";
     screenRef.current?.focus({ preventScroll: true });
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") finish();
+      if (event.key === "Escape") enterNow();
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -61,7 +66,7 @@ export function Entry({ onEnter }: { onEnter: () => void }) {
       tabIndex={-1}
     >
       <Mandala className="entry-backdrop-mandala" />
-      <button type="button" className="skip-intro" onClick={finish}>
+      <button type="button" className="skip-intro" onClick={enterNow}>
         Skip intro
       </button>
       <div className="gate">

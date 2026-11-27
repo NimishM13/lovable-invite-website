@@ -10,9 +10,11 @@ import {
 } from "@/config/wedding";
 
 describe("Wedding invitation", () => {
-  it("counts down to the exact IST ceremony time", () => {
+  it("counts down to the Phere at 3:00 PM IST on 24 January", () => {
+    const phere = weddingEvents.find((event) => event.id === "phere");
+    expect(weddingSettings.countdownTarget).toBe(phere?.start);
     expect(
-      remainingTime(weddingSettings.countdownTarget, Date.parse("2027-01-22T02:30:00Z"))?.values,
+      remainingTime(weddingSettings.countdownTarget, Date.parse("2027-01-23T09:30:00Z"))?.values,
     ).toEqual([1, 0, 0, 0]);
   });
   it("never shows negative values after the celebration begins", () => {

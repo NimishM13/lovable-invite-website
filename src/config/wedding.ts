@@ -8,6 +8,7 @@ import baarat from "@/assets/baarat.webp";
 import reception from "@/assets/reception.webp";
 import receptionNight from "@/assets/reception-night.webp";
 import phere from "@/assets/phere.webp";
+import sohnneyaa from "@/assets/audio/sohnneyaa.mp3";
 
 /**
  * Single source of truth for everything a guest reads.
@@ -21,9 +22,15 @@ export const weddingSettings = {
   dateText: "23–24 January 2027",
   /** Public URL of the deployed invitation; used for absolute share/preview links. Leave "" to use the current page URL. */
   siteUrl: "https://wedding-invite-black-ten.vercel.app",
-  /** The countdown counts to this moment (ISO 8601 with IST offset). */
-  countdownTarget: "2027-01-23T08:00:00+05:30",
-  countdownLabel: "until the celebrations begin",
+  /** The countdown counts to this moment (ISO 8601 with IST offset): the Phere on the wedding day. */
+  countdownTarget: "2027-01-24T15:00:00+05:30",
+  countdownLabel: "until the wedding day",
+  /** The three gold seals guests scratch to reveal the date (shown after reveal, with the countdown). */
+  saveTheDate: [
+    { label: "Day", value: "24" },
+    { label: "Month", value: "January" },
+    { label: "Year", value: "2027" },
+  ],
   tagline: "Two days. Countless memories. One beautiful beginning.",
   heroMessage:
     "Together with our families, we joyfully invite you to celebrate our wedding — two days of rituals, music and blessings.",
@@ -42,6 +49,8 @@ export const weddingSettings = {
     "With love in our hearts and blessings from our families, we invite you to celebrate the beginning of our forever.",
   closing: "Your presence will make these moments even more special.",
   illustrations: { cover, coverWide, opening, finale: reception },
+  /** Background song: starts when the guest taps the seal, loops, and has a play/pause button. */
+  music: { src: sohnneyaa, title: "Sohnneyaa (The Wedding Version)" },
 };
 
 export type FamilySide = {

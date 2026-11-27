@@ -11,7 +11,7 @@ import {
 import { artworkSources } from "@/config/artwork";
 import { Artwork, VenueLink } from "./primitives";
 import { ArchOutline, FloralCorner, LotusDivider, Mandala, Pavilion, Petals } from "./ornaments";
-import { Countdown } from "./countdown";
+import { SaveTheDate } from "./scratch";
 import { Celebrations, Timeline } from "./celebrations";
 import { useInvitationMotion } from "./motion";
 
@@ -203,7 +203,7 @@ function Venues() {
               <h3>
                 <VenueLink venueId={id} />
               </h3>
-              <p className="venue-address">{venue.address || "Full address will be shared soon"}</p>
+              {/* <p className="venue-address">{venue.address || "Full address will be shared soon"}</p> */}
               {hosted.length > 0 && (
                 <ul className="venue-events" aria-label={`Celebrations at ${venue.name}`}>
                   {hosted.map((event) => (
@@ -348,7 +348,7 @@ export function Invitation() {
       <main>
         <Hero />
         <Family />
-        <Countdown />
+        <SaveTheDate />
         <Celebrations />
         <Timeline />
         <Venues />

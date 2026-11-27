@@ -223,6 +223,35 @@ main { overflow-x: clip; }
 .countdown-static, .countdown-complete { font-family: var(--font-display); font-size: 30px; color: var(--burgundy); margin: 16px auto; max-width: 520px; }
 .countdown-note { font-size: 13px; color: var(--muted); margin-top: 28px; letter-spacing: .04em; }
 
+/* Background music control */
+.music-toggle { position: fixed; z-index: 40; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: color-mix(in oklab, var(--paper-light) 86%, transparent); backdrop-filter: blur(8px); color: var(--burgundy); cursor: pointer; box-shadow: 0 0 0 4px color-mix(in oklab, var(--paper-light) 60%, transparent), 0 10px 24px -12px rgba(90,44,55,.5); transition: transform .3s var(--ease-silk); }
+.music-toggle:hover { transform: scale(1.06); }
+.music-toggle:focus-visible { outline: 2px solid var(--burgundy); outline-offset: 4px; }
+.music-toggle svg { width: 20px; height: 20px; }
+.music-bars { position: absolute; bottom: 8px; display: none; gap: 2px; align-items: flex-end; height: 6px; }
+.music-bars i { width: 2px; height: 100%; background: var(--gold); border-radius: 1px; animation: music-bar .9s ease-in-out infinite alternate; }
+.music-bars i:nth-child(2) { animation-delay: .3s; }
+.music-bars i:nth-child(3) { animation-delay: .6s; }
+.music-toggle.is-playing svg { transform: translateY(-3px); }
+.music-toggle.is-playing .music-bars { display: flex; }
+@keyframes music-bar { from { transform: scaleY(.3); } to { transform: scaleY(1); } }
+
+/* Save-the-date scratch seals */
+.scratch-row { display: flex; justify-content: center; gap: clamp(18px, 4vw, 44px); margin: 18px auto 0; flex-wrap: wrap; }
+.scratch-seal { display: flex; flex-direction: column; align-items: center; gap: 12px; width: clamp(118px, 17vw, 156px); }
+.scratch-face { position: relative; width: 100%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle, var(--paper-light) 58%, var(--blush)); box-shadow: 0 0 0 1px var(--line), 0 0 0 6px var(--paper-light), 0 0 0 7px var(--line), 0 14px 30px -16px rgba(90,44,55,.45); }
+.scratch-value { font-family: var(--font-display); font-size: clamp(26px, 3.4vw, 36px); line-height: 1.05; color: var(--burgundy); font-variant-numeric: lining-nums; padding: 0 10px; text-align: center; }
+.scratch-seal.is-revealed .scratch-value { animation: scratch-bloom .9s var(--ease-silk) both; }
+.scratch-foil { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; cursor: grab; touch-action: none; background: linear-gradient(135deg, #EAD29A, #C7A766 35%, #F1DDAA 55%, #B08E52 80%, #8E6F3A); }
+.scratch-foil.is-painted { background: none; }
+.scratch-foil:active { cursor: grabbing; }
+.scratch-foil:focus-visible { outline: 2px solid var(--burgundy); outline-offset: 8px; }
+.scratch-label { font-size: 11px; text-transform: uppercase; letter-spacing: .22em; color: var(--muted); }
+.scratch-hint p { font-size: 14px; color: var(--muted); margin: 26px auto 6px; max-width: 420px; }
+.scratch-after { animation: scratch-bloom 1s var(--ease-silk) .15s both; }
+.scratch-row.is-complete .scratch-face { box-shadow: 0 0 0 1px var(--gold), 0 0 0 6px var(--paper-light), 0 0 0 7px var(--gold), 0 0 34px -6px color-mix(in oklab, var(--gold-soft) 80%, transparent); transition: box-shadow .8s; }
+@keyframes scratch-bloom { from { opacity: 0; transform: scale(.94); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
+
 /* ───────────── Celebrations ───────────── */
 .celebrations-intro { padding: 120px 24px 40px; text-align: center; max-width: 720px; margin: 0 auto; }
 .celebrations-intro > p:last-child { color: var(--muted); font-size: 17px; line-height: 1.7; }
@@ -471,6 +500,13 @@ main { overflow-x: clip; }
   .countdown-unit small { font-size: 9px; letter-spacing: .12em; }
   .countdown-unit + .countdown-unit::before { width: 5px; height: 5px; left: -3px; }
   .countdown-note { font-size: 12px; }
+  .scratch-row { gap: 16px; flex-wrap: nowrap; padding: 0 6px; }
+  .scratch-seal { flex: 1 1 0; min-width: 0; width: auto; max-width: 112px; gap: 10px; }
+  .scratch-after .countdown-static { font-size: 22px; }
+  .scratch-row.is-complete .scratch-face { box-shadow: 0 0 0 1px var(--gold), 0 0 0 4px var(--paper-light), 0 0 0 5px var(--gold), 0 0 24px -6px color-mix(in oklab, var(--gold-soft) 80%, transparent); }
+  .scratch-face { box-shadow: 0 0 0 1px var(--line), 0 0 0 4px var(--paper-light), 0 0 0 5px var(--line), 0 10px 22px -14px rgba(90,44,55,.45); }
+  .scratch-value { font-size: clamp(19px, 6vw, 26px); padding: 0 6px; }
+  .scratch-label { font-size: 10px; letter-spacing: .16em; }
 
   .celebrations-intro { padding: 80px 22px 24px; }
   .celebrations-intro > p:last-child { font-size: 15px; }
